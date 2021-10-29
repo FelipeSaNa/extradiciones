@@ -393,7 +393,7 @@ extradiciones = extradiciones %>%
                               delito == "trafico_de_personas_con_fines_de_explotacion_sexual" ~ "trata_de_personas",
                               delito == "cometer_actos_lujuriosos_o_lascivos_con_persona_menor_de_edad_sexuales" ~ "delito_sexual_menores",
                               delito == "filiacion_a_una_pandilla" ~ "asociacion_delictuosa",
-                              delito == "uso_ilegal_de_una_instalacion_de_comunicaciones" ~ "uso_ilegal_de_una_instalacion_de_comunicaciones",
+                              delito == "uso_ilegal_de_una_instalacion_de_comunicaciones" ~ "uso_ilegal_instalacion_de_comunicaciones",
                               delito == "tentativa_de_homicidio_de_un_oficial_de_paz" ~ "homicidio",
                               delito == "robo_con_violencia_en_segundo_grado" ~ "robo",
                               delito == "robo_o_uso_no_autorizado_de_un_vehiculo_hurto" ~ "robo",
@@ -440,10 +440,16 @@ extradiciones = extradiciones %>%
                               delito == "violacion_sexual_forzada" ~ "violacion",
                               delito == "usar_y_poseer_un_arma_de_fuego_en_fomento_de_un_delito_violento" ~ "delito_con_arma_de_fuego",
                               delito == "sodomia_criminal" ~ "delitos_sexuales",
-                              delito == "conducir_bajo_el _influjo_de_alcohol" ~ "conducir_bajo_el_influjo_de_alcohol" ),
+                              delito == "conducir_bajo_el _influjo_de_alcohol" ~ "conducir_bajo_el_influjo_de_alcohol",
+                              delito == "conducta_sexual_con_menor" ~ "agresion_sexual_contra_menor",
+                              delito == "delito_sexual_menores" ~ "delito_sexual_contra_menores",
+                              TRUE ~ delito),
            fecha_peticion = dmy(fecha_peticion),
            fecha_resolucion = dmy(fecha_resolucion),
-           tiempo_resolucion = as.duration(fecha_resolucion-fecha_peticion))
+           tiempo_resolucion = as.duration(fecha_resolucion-fecha_peticion),
+           fecha_peticion2 = fecha_peticion) %>%
+    separate(fecha_peticion2, into = c("ano_peticion", "mes_peticion", "dia_peticion"))
+           # ano = substring(fecha_peticion,-2))
 # extradiciones_2 %>% select(tiempo_resolucion)  %>% na.exclude()
 #     %>% mean()
 
