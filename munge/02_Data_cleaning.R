@@ -447,11 +447,16 @@ extradiciones = extradiciones %>%
            fecha_peticion = dmy(fecha_peticion),
            fecha_resolucion = dmy(fecha_resolucion),
            tiempo_resolucion = as.duration(fecha_resolucion-fecha_peticion),
-           fecha_peticion2 = fecha_peticion) %>%
+           fecha_peticion2 = fecha_peticion,
+           resuelta = ifelse(resultado == "concedida", "si", "no"))%>%
     separate(fecha_peticion2, into = c("ano_peticion", "mes_peticion", "dia_peticion"))
            # ano = substring(fecha_peticion,-2))
 # extradiciones_2 %>% select(tiempo_resolucion)  %>% na.exclude()
 #     %>% mean()
+#saving databases
+save(extradiciones, file = here("data","clean","extradiciones_final.RDS"))
+write_xlsx(extradiciones, here("data","clean","extradiciones_final.xlsx"))
+write_csv(extradiciones, here("data","clean","extradiciones_final.csv"))
 
 #
 #
